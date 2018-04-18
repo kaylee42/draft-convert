@@ -157,4 +157,16 @@ describe('blockInlineStyles', () => {
     const result = blockInlineStyles(contentState);
     expect(result).toBe('aaa😥<strong>aa</strong>a');
   });
+
+  it('plays well with two emoji and a quote', () => {
+    const contentState = buildRawBlock("aaa😥😥a'aa", [
+      {
+        style: 'BOLD',
+        offset: 5,
+        length: 3
+      }
+    ]);
+    const result = blockInlineStyles(contentState);
+    expect(result).toBe("aaa😥😥<strong>a'a</strong>a");
+  });
 });

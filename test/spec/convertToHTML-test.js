@@ -784,6 +784,30 @@ describe('convertToHTML', () => {
     expect(result).toBe('<p>👍</p>');
   });
 
+  it('handles multiple emoji followed by a quote', () => {
+    const contentState = buildContentState([
+      {
+        text: "aaa😥😥a'aa",
+        type: 'unstyled',
+        depth: 0,
+        inlineStyleRanges: [
+          {
+            style: 'BOLD',
+            offset: 5,
+            length: 3
+          }
+        ]
+      }
+    ], {}
+    );
+
+    const result = convertToHTML({
+      styleToHTML: styleMarkup
+    })(contentState);
+
+    expect(result).toBe("aaa😥😥<strong>a'a</strong>a");
+  });
+
   it('supports a string output for blockToHTML', () => {
     const contentState = buildContentState([
       {
